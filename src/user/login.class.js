@@ -20,19 +20,21 @@ class Login {
 
     formListener() {
         $('#loginForm').on(
-            'keyup', 
+            'keyup',
             // callback : fonction appelée si l'évenement défini survient
-            function(event) {
+            function (event) {
                 // verifier le contenu des deux champs
                 const login = $('[name="loginField"]');
                 const password = $('[name="passwordField"]');
-                
-                if (login.val().length > 4 && password.val() !=='') {
+
+                if (login.val().length > 4 && password.val() !== '') {
                     // on active le bouton
                     $('#btnLogin').removeAttr('disabled');
-                }else $('#btnLogin').attr('disabled, disabled');
+                } else {
+                    $('#btnLogin').attr('disabled', 'disabled');
+                }
 
-                console.log('Login : ' +login.val() + password.val()) ;
+                console.log('Login : ' + login.val() + password.val());
 
             }
         )
