@@ -6,8 +6,10 @@ class Login {
         // Modifier le titre de la page
         $('#main-title').html('Identifiez-vous');
 
+
         // déinition du listener sur le formulaire
         this.formListener();
+        this.submitListener();
     }
 
 
@@ -37,6 +39,33 @@ class Login {
                 console.log('Login : ' + login.val() + password.val());
 
             }
-        )
+        );
+    }
+
+
+    submitListener() {
+
+        $('#loginForm').on(
+            'submit',
+            function (event) {
+                event.preventDefault(); // empeche l'action par défaut
+
+                const login = $('[name="loginField"]');
+                const password = $('[name="passwordField"]');
+
+                const user = new User;
+
+                console.log('Le formulaire est validé !');
+
+                user.setUserName(login.val());
+                user.setPassword(password.val());
+
+                if (user.authentificate()) {
+                    console.log('ok c est bon');
+                } else {
+                    console.log('cest pas bon');
+                }
+            }
+        );
     }
 }
