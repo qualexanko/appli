@@ -64,6 +64,18 @@ class Login {
                     console.log('ok c est bon');
                 } else {
                     console.log('cest pas bon');
+                    login.val('');
+                    password.val('');
+
+                    $('#btnLogin').attr('disabled', 'disabled');
+
+                    const toast = new Toast(
+                        {
+                        'message': 'nom d utilisateur ou mdp incorrect',
+                        'duration' : 2
+                        }
+                    );
+                    toast.toastIt();
                 }
             }
         );
