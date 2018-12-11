@@ -5,9 +5,7 @@ class Menu {
     this.setConnect();
     
     }
-
-      
-  
+ 
     setConnect(){
     const navbar = $('#navbarDropdown');
     navbar.html(this.connect);
