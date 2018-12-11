@@ -11,7 +11,8 @@ class Toast {
 
             //parametre de d"finition de la couleur du fond du toast par défaut
             this.backgroundClass = 'danger';
-        } else { //sinon le parametre défini dans l'objet params qui est de type json dans login.class.js
+            
+        } else { 
             this.backgroundClass = params.background;
         }
         if (!params.hasOwnProperty('duration')) {

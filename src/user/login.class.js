@@ -58,6 +58,7 @@ class Login {
 
                 if (user.authentificate()) {
                     console.log('ok c est bon');
+                    const menu = new Menu(user);
                 } else {
                     console.log('cest pas bon');
                     login.val('');
@@ -76,5 +77,5 @@ class Login {
                 }
             }
         );
-    }
+    } 
 }

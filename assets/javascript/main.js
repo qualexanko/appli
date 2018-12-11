@@ -6,4 +6,5 @@
 let title = document.getElementById('main-title');
 title.innerHTML = 'Hello Javascript';
 
+
 const login = new Login();
