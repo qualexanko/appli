@@ -68,7 +68,7 @@ class Login {
                     const toast = new Toast(
                         // objet de type json : message et duration sont des attributs et ce qu'il y a en face sont les valeurs
                         {
-                        'message': 'nom d\'utilisateur ou mdp incorrect',
+                        'message': 'nom dutilisateur ou mdp incorrect',
                         'duration' : 2
                         }
                     );
