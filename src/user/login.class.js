@@ -35,9 +35,7 @@ class Login {
                 } else {
                     $('#btnLogin').attr('disabled', 'disabled');
                 }
-
-                console.log('Login : ' + login.val() + password.val());
-
+              
             }
         );
     }
@@ -54,9 +52,7 @@ class Login {
                 const password = $('[name="passwordField"]');
 
                 const user = new User;
-
-                console.log('Le formulaire est validé !');
-
+               
                 user.setUserName(login.val());
                 user.setPassword(password.val());
 
@@ -70,8 +66,9 @@ class Login {
                     $('#btnLogin').attr('disabled', 'disabled');
 
                     const toast = new Toast(
+                        // objet de type json : message et duration sont des attributs et ce qu'il y a en face sont les valeurs
                         {
-                        'message': 'nom d utilisateur ou mdp incorrect',
+                        'message': 'nom d\'utilisateur ou mdp incorrect',
                         'duration' : 2
                         }
                     );

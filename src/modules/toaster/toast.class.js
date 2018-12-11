@@ -7,11 +7,11 @@
 
 class Toast {
     constructor(params) {
-        if (!params.hasOwnProperty('background')) {
+        if (!params.hasOwnProperty('background')) { //si l'attribut backgroud n'existe pas (point d'excalamation pour n'existe pas)
 
-            //parametre de d"finition de la couleur du fond du toast
+            //parametre de d"finition de la couleur du fond du toast par défaut
             this.backgroundClass = 'danger';
-        } else {
+        } else { //sinon le parametre défini dans l'objet params qui est de type json dans login.class.js
             this.backgroundClass = params.background;
         }
         if (!params.hasOwnProperty('duration')) {
@@ -37,13 +37,14 @@ class Toast {
         this.duration = duration;
     }
     toastIt() {
-        // crée en mémoire un nouvel element dans le DOM
+        // crée en mémoire un nouvel element dans le DOM, c'est a dire un <div></div> dans l'index.html
         const toaster = $('<div>');
 
         // on lui ajoute les classes
         toaster
-            .addClass(this.backgroundClass)
-            .addClass('toast')
+            .addClass(this.backgroundClass) // revient a fair <div class = "danger"> 
+            .addClass('toast') // revient a faire <div class = "danger toast"> 
+            // Ajouter du contenu entre les balises div :
             .html(this.message);
 
         //ajoute le toaster au document lui-meme
