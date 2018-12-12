@@ -1,32 +1,38 @@
-/** 
+/**
  * @name User
  * @desc Service de gestion des utilisateurs
  * @author Aélion
  * @version 1.0.0
-*/
-
-class User {
+ */
+export class User {
     constructor() {}
 
-    /** Définit le username de l'utilisateur
-     * @param {*} userName
+    /**
+     * Définit le username de l'utilisateur
+     * @param {*} userName 
      */
-
     setUserName(userName) {
         this.userName = userName;
     }
 
-    /** Définit le mdp utilisateur */
+    /**
+     * Définit le mot de passe utilisateur
+     * @param {*} password 
+     */
     setPassword(password) {
         this.password = password;
     }
 
-    authentificate() {
-        if (this.userName === 'qalexanko' && this.password === 'qal') {
+    /**
+     * Identifie l'utilisateur à partir d'un login et d'un mot de passe
+     * @return boolean
+     */
+    authenticate() {
+        if (this.userName === 'qalex' && this.password === 'qal') {
             this.group = 'Administrateur';
             return true;
         }
+
         return false;
     }
-
 }
