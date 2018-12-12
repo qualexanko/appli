@@ -25,14 +25,16 @@ export class Login {
      * @return void
      */
     formListener() {
-        let login = this.login;
-        let password = this.password;
+        
 
-        $('#loginForm').on(
+        const app = $('[app]')
+        app.on(
             'keyup',
+            '#loginForm',
             // Callback : fonction appelée si l'événement défini survient
             function(event) {
-
+                let login = $('[name=loginField]');
+                let password = $('[name=passwordField]');
                 // Est-ce que les deux champs sont remplis
                 if ( 
                     password.val() !== '' &&
@@ -48,12 +50,16 @@ export class Login {
     }
 
     submitListener() {
-        let login = this.login;
-        let password = this.password;
+       
 
-        $('#loginForm').on(
+        const app = $('[app]')
+      app.on(
             'submit',
+            '#loginForm',
             function(event) {
+                let login = $('[name=loginField]');
+                let password = $('[name=passwordField]');
+                
                 event.preventDefault(); // Empêche l'action par défaut...
                 
                 // Instancie un nouvel utilisateur

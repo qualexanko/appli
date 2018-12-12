@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 export class User {
-    constructor() {}
+    constructor() { }
 
     /**
      * Définit le username de l'utilisateur
@@ -30,9 +30,16 @@ export class User {
     authenticate() {
         if (this.userName === 'qalex' && this.password === 'qal') {
             this.group = 'Administrateur';
+            //ajout de l'utilisateur dans le localStorage
+            const persistentUser = {
+                userName: this.userName,
+                group: this.group
+            };
+            localStorage.setItem('storiesUser', JSON.stringify(persistentUser));
+
             return true;
         }
-
         return false;
+
     }
 }

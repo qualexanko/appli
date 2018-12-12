@@ -96,17 +96,114 @@
 "use strict";
 
 
-var _login = __webpack_require__(/*! ./../../src/user/login.class */ "./src/user/login.class.js");
+var _login2 = __webpack_require__(/*! ./../../src/user/login.class */ "./src/user/login.class.js");
 
-var title = document.getElementById('main-title'); /**
-                                                    * @name main.js
-                                                    * @desc Point d'entrée principal dans l'application Javascript
-                                                    */
+var _loginController = __webpack_require__(/*! ./../../src/user/login/views/loginController.class */ "./src/user/login/views/loginController.class.js");
 
-title.innerHTML = 'Hello Javascript';
+var _messtoriesController = __webpack_require__(/*! ../../src/user/login/views/messtoriesController */ "./src/user/login/views/messtoriesController.js");
 
+var _userService = __webpack_require__(/*! ./../../src/services/user-service.class */ "./src/services/user-service.class.js");
+
+//verson 1.0.1 passage par controleur
+//const controller = new LoginController();
+//onst controller = new StorieController();
+//controller.getView();
+
+
+/**
+ * @name main.js
+ * @desc Point d'entrée principal dans l'application Javascript
+ */
+var authGuard = new _userService.UserService();
+if (!authGuard.hasUser()) {
+  var controller = new _loginController.LoginController();
+  controller.getView();
+  var _login = new _login2.Login();
+} else {
+
+  var _controller = new _messtoriesController.StorieController();
+  _controller.getView();
+}
 // Créer une instance de Login
-var login = new _login.Login();
+var login = new _login2.Login();
+
+//const controllers = new StorieController();
+//controllers.getView();
+
+/***/ }),
+
+/***/ "./node_modules/os-browserify/browser.js":
+/*!***********************************************!*\
+  !*** ./node_modules/os-browserify/browser.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.endianness = function () {
+    return 'LE';
+};
+
+exports.hostname = function () {
+    if (typeof location !== 'undefined') {
+        return location.hostname;
+    } else return '';
+};
+
+exports.loadavg = function () {
+    return [];
+};
+
+exports.uptime = function () {
+    return 0;
+};
+
+exports.freemem = function () {
+    return Number.MAX_VALUE;
+};
+
+exports.totalmem = function () {
+    return Number.MAX_VALUE;
+};
+
+exports.cpus = function () {
+    return [];
+};
+
+exports.type = function () {
+    return 'Browser';
+};
+
+exports.release = function () {
+    if (typeof navigator !== 'undefined') {
+        return navigator.appVersion;
+    }
+    return '';
+};
+
+exports.networkInterfaces = exports.getNetworkInterfaces = function () {
+    return {};
+};
+
+exports.arch = function () {
+    return 'javascript';
+};
+
+exports.platform = function () {
+    return 'browser';
+};
+
+exports.tmpdir = exports.tmpDir = function () {
+    return '/tmp';
+};
+
+exports.EOL = '\n';
+
+exports.homedir = function () {
+    return '/';
+};
 
 /***/ }),
 
@@ -360,6 +457,44 @@ var Toast = exports.Toast = function () {
 
 /***/ }),
 
+/***/ "./src/services/user-service.class.js":
+/*!********************************************!*\
+  !*** ./src/services/user-service.class.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var UserService = exports.UserService = function () {
+    function UserService() {
+        _classCallCheck(this, UserService);
+    }
+
+    _createClass(UserService, [{
+        key: 'hasUser',
+        value: function hasUser() {
+            var user = JSON.parse(localStorage.getItem('storiesUser'));
+            if (user) {
+                return true;
+            }return false;
+        }
+    }]);
+
+    return UserService;
+}();
+
+/***/ }),
+
 /***/ "./src/user/login.class.js":
 /*!*********************************!*\
   !*** ./src/user/login.class.js ***!
@@ -414,13 +549,13 @@ var Login = exports.Login = function () {
     _createClass(Login, [{
         key: 'formListener',
         value: function formListener() {
-            var login = this.login;
-            var password = this.password;
 
-            $('#loginForm').on('keyup',
+            var app = $('[app]');
+            app.on('keyup', '#loginForm',
             // Callback : fonction appelée si l'événement défini survient
             function (event) {
-
+                var login = $('[name=loginField]');
+                var password = $('[name=passwordField]');
                 // Est-ce que les deux champs sont remplis
                 if (password.val() !== '' && login.val().length >= 5) {
                     // On peut activer le bouton...
@@ -434,10 +569,12 @@ var Login = exports.Login = function () {
     }, {
         key: 'submitListener',
         value: function submitListener() {
-            var login = this.login;
-            var password = this.password;
 
-            $('#loginForm').on('submit', function (event) {
+            var app = $('[app]');
+            app.on('submit', '#loginForm', function (event) {
+                var login = $('[name=loginField]');
+                var password = $('[name=passwordField]');
+
                 event.preventDefault(); // Empêche l'action par défaut...
 
                 // Instancie un nouvel utilisateur
@@ -476,6 +613,121 @@ var Login = exports.Login = function () {
     }]);
 
     return Login;
+}();
+
+/***/ }),
+
+/***/ "./src/user/login/views/loginController.class.js":
+/*!*******************************************************!*\
+  !*** ./src/user/login/views/loginController.class.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * @name LoginController
+ * @desc Controleur pour la gestion du formulaire de login
+ * @aythor Aélion
+ * @version 1.0.0
+ * 
+ */
+
+var LoginController = exports.LoginController = function () {
+    function LoginController() {
+        _classCallCheck(this, LoginController);
+
+        // Definit la vue pour ce controller
+        this.view = './src/user/login/views/loginform.view.html';
+    }
+    /** 
+     * méthode pour recuperer la vur à afficher 
+    */
+
+
+    _createClass(LoginController, [{
+        key: 'getView',
+        value: function getView() {
+            var app = $('[app]');
+
+            $.get(this.view, function (viewContent) {
+                app.empty();
+                app.html(viewContent);
+            });
+        }
+    }]);
+
+    return LoginController;
+}();
+
+/***/ }),
+
+/***/ "./src/user/login/views/messtoriesController.js":
+/*!******************************************************!*\
+  !*** ./src/user/login/views/messtoriesController.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.StorieController = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _os = __webpack_require__(/*! os */ "./node_modules/os-browserify/browser.js");
+
+var _user = __webpack_require__(/*! ./../../user.class */ "./src/user/user.class.js");
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * @name StoriesController
+ * @desc Controleur pour la gestion du formulaire de login
+ * @aythor Aélion
+ * @version 1.0.0
+ * 
+ */
+
+var StorieController = exports.StorieController = function () {
+    function StorieController() {
+        _classCallCheck(this, StorieController);
+
+        // Definit la vue pour ce controller
+        this.view = './src/user/login/views/messtories.view.html';
+    }
+    /** 
+     * méthode pour recuperer la vue à afficher 
+    */
+
+
+    _createClass(StorieController, [{
+        key: 'getView',
+        value: function getView() {
+            var app = $('[app]');
+
+            $.get(this.view, function (viewContent) {
+                app.empty();
+                app.html(viewContent);
+            });
+        }
+    }]);
+
+    return StorieController;
 }();
 
 /***/ }),
@@ -542,9 +794,15 @@ var User = exports.User = function () {
         value: function authenticate() {
             if (this.userName === 'qalex' && this.password === 'qal') {
                 this.group = 'Administrateur';
+                //ajout de l'utilisateur dans le localStorage
+                var persistentUser = {
+                    userName: this.userName,
+                    group: this.group
+                };
+                localStorage.setItem('storiesUser', JSON.stringify(persistentUser));
+
                 return true;
             }
-
             return false;
         }
     }]);

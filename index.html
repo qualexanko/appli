@@ -11,6 +11,7 @@
     <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="./node_modules/animate.css/animate.css" rel="stylesheet">
     <link href="./assets/css/custom.css" rel="stylesheet">
+    <link href="./assets/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -61,16 +62,9 @@
         </nav>
 
         <!-- Docking de la SPA (non, non, ça veut dire Single Page Application) -->
-        <div app>
+        <div app id="login">
             <!-- Ici, le contenu de l'application finale identifié par l'attribut "app" -->
-            <div class="row">
-                <form id="loginForm" class="form-stacked col-md-6 center-block">
-                    <input type="text" name="loginField" autocomplete="off" class="form-control" placeholder="Votre identifiant">
-                    <input type="password" name="passwordField" autocomplete="off" class="form-control" placeholder="Votre mot de passe">
-
-                    <button type="submit" id="btnLogin" class="btn btn-success" disabled>Connexion</button>
-                </form>
-            </div>
+            
         </div>
 
         <footer>
