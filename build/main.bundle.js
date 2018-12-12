@@ -271,6 +271,10 @@ var Menu = exports.Menu = function () {
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -281,7 +285,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @author Aélion
  * @version 1.0.0
  */
-var Toast = function () {
+var Toast = exports.Toast = function () {
     function Toast(params) {
         _classCallCheck(this, Toast);
 
@@ -335,14 +339,17 @@ var Toast = function () {
             var toaster = $('<div>');
 
             // On lui ajoute les classes
-            toaster.addClass('toast').addClass(this.backgroundClass).css('width', this.width).css('height', this.height).html('<p>' + this.message + '</p>');
+            toaster.addClass('toast').addClass(this.backgroundClass).css('width', this.width).css('height', this.height).addClass('animated').addClass('fadeInDownBig').html('<p>' + this.message + '</p>');
 
             // Ajoute le toaster au document lui-même
             toaster.appendTo($('body'));
 
             // Affiche pendant un certain temps
             setTimeout(function () {
-                // Ici, quand on arrive au bout de l'intervalle de temps
+                setTimeout(function () {
+                    toaster.addClass('fadeOutRightBig');
+                }(this.duration / 2) * 1000);
+                //Ici, quand on arrive au bout de l'intervalle de temps
                 toaster.remove();
             }, this.duration * 1000);
         }
@@ -457,7 +464,7 @@ var Login = exports.Login = function () {
                     // On peut instancier un toast
                     var toast = new _toast.Toast({
                         message: 'Ce login ou ce mot de passe ne correspond à aucun utilisateur',
-                        duration: 2,
+                        duration: 10,
                         background: 'warning',
                         width: 200,
                         height: 100
